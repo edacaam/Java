@@ -1,5 +1,5 @@
 # ArrayList
-It is a project that exemplifies the use of ArrayList methods in Java.
+Java'da ArrayList metotlarının kullanımını örnekleyen proje dosyasıdır.
 
 ## ArrayList Methodları
 #### 1.add(E e)
