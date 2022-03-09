@@ -1,5 +1,6 @@
 package com.turkcell.rentACar.business.dtos;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -14,6 +15,6 @@ public class CarMaintenanceListDto {
 	
 	private String description;
 	
-	private Date returnDate;
+	private LocalDate returnDate;
 	
 }

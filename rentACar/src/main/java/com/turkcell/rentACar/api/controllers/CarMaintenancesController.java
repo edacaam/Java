@@ -23,7 +23,7 @@ import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.Result;
 
 @RestController
-@RequestMapping("/api/car-maintenances")
+@RequestMapping("/api/carMaintenances")
 public class CarMaintenancesController {
 	
 	CarMaintenanceService carMaintenanceService;

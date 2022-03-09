@@ -9,13 +9,17 @@ import com.turkcell.rentACar.business.requests.UpdateCarMaintenanceRequest;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.Result;
 
-
 public interface CarMaintenanceService {
 
-	DataResult<List<CarMaintenanceListDto>> getAll();
 	Result add(CreateCarMaintenanceRequest createCarMaintenanceRequest);
-	DataResult<GetCarMaintenanceDto> getById(int id);
-	Result delete(int id);
+
 	Result update(UpdateCarMaintenanceRequest updateCarMaintenanceRequest);
+
+	Result delete(int id);
+
+	DataResult<GetCarMaintenanceDto> getById(int id);
+
+	DataResult<List<CarMaintenanceListDto>> getAll();
+
 	DataResult<List<CarMaintenanceListDto>> getByCarId(int carId);
 }
