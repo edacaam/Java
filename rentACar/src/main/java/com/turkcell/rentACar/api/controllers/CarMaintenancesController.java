@@ -43,7 +43,7 @@ public class CarMaintenancesController {
 		return carMaintenanceService.add(createCarMaintenanceRequest);
 	}
 
-	@GetMapping("/get/{id}")
+	@GetMapping("/getById/{id}")
 	public DataResult<GetCarMaintenanceDto> getById(@RequestParam int id) {
 		return carMaintenanceService.getById(id);
 	}

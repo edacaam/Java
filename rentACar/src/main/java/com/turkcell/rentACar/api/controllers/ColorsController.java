@@ -32,7 +32,7 @@ public class ColorsController {
 		this.colorService = colorService;
 	}
 
-	@GetMapping("/getall")
+	@GetMapping("/getAll")
 	public DataResult<List<ColorListDto>> getAll() {
 		return colorService.getAll();
 	}
@@ -42,7 +42,7 @@ public class ColorsController {
 		return this.colorService.add(createColorRequest);
 	}
 
-	@GetMapping("/getbyid/{id}")
+	@GetMapping("/getById/{id}")
 	public DataResult<GetColorDto> getById(@RequestParam int id) {
 		return this.colorService.getById(id);
 	}

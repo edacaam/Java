@@ -41,7 +41,7 @@ public class CarsController {
 		return carService.add(createCarRequest);
 	}
 
-	@GetMapping("/get/{id}")
+	@GetMapping("/getById/{id}")
 	public DataResult<GetCarDto> getById(@RequestParam int id) {
 		return carService.getById(id);
 	}
@@ -61,12 +61,12 @@ public class CarsController {
 		return this.carService.getByDailyPrice(dailyPrice);
 	}
 	
-	@GetMapping("/getallpages")
+	@GetMapping("/getAllPages")
 	public DataResult<List<CarListDto>> getAllPaged(int pageNo, int pageSize) {
 		return carService.getAllPaged(pageNo, pageSize);
 	}
 
-	@GetMapping("/getallsorted")
+	@GetMapping("/getAllSorted")
 	public DataResult<List<CarListDto>> getAllSorted(String direction) {
 		return carService.getAllSorted(direction);
 	}

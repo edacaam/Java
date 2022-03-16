@@ -33,11 +33,15 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 	private RentalCarService rentalCarService;
 	private CarService carService;
 	
-	@Lazy
+	
 	@Autowired
-	public CarMaintenanceManager(CarMaintenanceDao carMaintenanceDao, ModelMapperService modelMapperService) {
+	public CarMaintenanceManager(CarMaintenanceDao carMaintenanceDao, ModelMapperService modelMapperService,
+			@Lazy RentalCarService rentalCarService, CarService carService) {
+		super();
 		this.carMaintenanceDao = carMaintenanceDao;
 		this.modelMapperService = modelMapperService;
+		this.rentalCarService = rentalCarService;
+		this.carService = carService;
 	}
 
 	@Override

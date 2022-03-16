@@ -44,7 +44,7 @@ public class BrandManager implements BrandService {
 	}
 
 	@Override
-	public Result add(CreateBrandRequest createBrandRequest){
+	public Result add(CreateBrandRequest createBrandRequest) {
 		Brand brand = this.modelMapperService.forRequest().map(createBrandRequest, Brand.class);
 		checkIfBrandExists(createBrandRequest.getName());
 		this.brandDao.save(brand);
@@ -56,7 +56,21 @@ public class BrandManager implements BrandService {
 	public DataResult<GetBrandDto> getById(int id) {
 		Brand brand = brandDao.findById(id);
 		GetBrandDto response = this.modelMapperService.forDto().map(brand, GetBrandDto.class);
-		return new SuccessDataResult<GetBrandDto>(response,"Getting brand by id");
+		return new SuccessDataResult<GetBrandDto>(response, "Getting brand by id");
+	}
+
+	@Override
+	public Result delete(int id) {
+		this.brandDao.deleteById(id);
+		return new SuccessResult("Brand deleted successfully.");
+	}
+
+	@Override
+	public Result update(UpdateBrandRequest updateBrandRequest) {
+		Brand brand = this.modelMapperService.forRequest().map(updateBrandRequest, Brand.class);
+		checkIfBrandNameExists(brand);
+		this.brandDao.save(brand);
+		return new SuccessResult("Brand updated successfully.");
 	}
 
 	private void checkIfBrandExists(String name) {
@@ -72,21 +86,6 @@ public class BrandManager implements BrandService {
 		if (ifExsistsBrand != null && ifExsistsBrand.getBrandId() != brand.getBrandId()) {
 			throw new BusinessException("Aynı isimde marka eklenemez");
 		}
-	}
-
-	@Override
-	public Result delete(int id) {
-		this.brandDao.deleteById(id);
-		return new SuccessResult("Brand deleted successfully.");
-
-	}
-
-	@Override
-	public Result update(UpdateBrandRequest updateBrandRequest) {
-		Brand brand = this.modelMapperService.forRequest().map(updateBrandRequest, Brand.class);
-		checkIfBrandNameExists(brand);
-		this.brandDao.save(brand);
-		return new SuccessResult("Brand updated successfully.");
 	}
 
 }

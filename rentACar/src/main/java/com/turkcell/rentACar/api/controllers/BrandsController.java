@@ -32,7 +32,7 @@ public class BrandsController {
 		this.brandService = brandService;
 	}
 
-	@GetMapping("/getall")
+	@GetMapping("/getAll")
 	public DataResult<List<BrandListDto>> getAll() {
 		return this.brandService.getAll();
 	}
@@ -42,7 +42,7 @@ public class BrandsController {
 		return this.brandService.add(createBrandRequest);
 	}
 
-	@GetMapping("/getbyid/{id}")
+	@GetMapping("/getById/{id}")
 	public DataResult<GetBrandDto> getById(@RequestParam int id) {
 		return this.brandService.getById(id);
 	}
