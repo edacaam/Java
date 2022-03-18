@@ -19,6 +19,7 @@ import com.turkcell.rentACar.business.abstracts.RentalCarService;
 import com.turkcell.rentACar.business.dtos.GetRentalCarDto;
 import com.turkcell.rentACar.business.dtos.RentalCarListDto;
 import com.turkcell.rentACar.business.requests.CreateRentalCarRequest;
+import com.turkcell.rentACar.business.requests.EndOfRentRequest;
 import com.turkcell.rentACar.business.requests.UpdateRentalCarRequest;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.Result;
@@ -69,5 +70,10 @@ public class RentalCarsController {
 	@DeleteMapping("/delete")
 	Result delete(int id) {
 		return this.rentalCarService.delete(id);
+	}
+	
+	@PutMapping("/endOfRent")
+	public Result endOfRent(@RequestBody @Valid EndOfRentRequest endOfRentRequest) {
+		return this.rentalCarService.endOfRent(endOfRentRequest);
 	}
 }

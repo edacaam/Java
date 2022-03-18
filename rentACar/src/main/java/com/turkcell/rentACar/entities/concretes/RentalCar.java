@@ -36,6 +36,12 @@ public class RentalCar {
 
 	@Column(name = "end_date")
 	private LocalDate endDate;
+	
+	@Column(name = "starting_kilometer")
+	private Double startingKilometer;
+
+	@Column(name = "ending_kilometer")
+	private Double endingKilometer;
 
 	@ManyToOne
 	@JoinColumn(name = "car_id")

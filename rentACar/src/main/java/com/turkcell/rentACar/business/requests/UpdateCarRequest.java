@@ -17,19 +17,26 @@ public class UpdateCarRequest {
 	@NotNull
 	@Positive
 	private int carId;
+	
 	@NotNull
 	@Min(0)
 	private double dailyPrice;
+	
 	@NotNull
 	@Min(1980)
 	@Max(2022)
 	private int modelYear;
 
 	private String description;
+	
 	@NotNull
 	@Positive
 	private int brandId;
+	
 	@NotNull
 	@Positive
 	private int colorId;
+	
+	@NotNull
+	private Double kilometer;
 }

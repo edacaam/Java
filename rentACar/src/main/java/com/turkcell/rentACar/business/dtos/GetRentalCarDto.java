@@ -30,4 +30,8 @@ public class GetRentalCarDto {
 	private List<AdditionalServiceListDto> additionalServiceListDtos;
 	
 	private Customer customer;
+	
+	private Double startingKilometer;
+
+	private Double endingKilometer;
 }

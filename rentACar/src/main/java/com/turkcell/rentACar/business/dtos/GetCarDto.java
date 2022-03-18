@@ -20,4 +20,6 @@ public class GetCarDto {
 	private String brandName;
 	
 	private String colorName;
+	
+	private Double kilometer;
 }

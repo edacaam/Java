@@ -39,6 +39,9 @@ public class Car {
 	@Column(name="description")
 	private String description;
 	
+	@Column(name = "kilometer")
+	private Double kilometer;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="brand_id")
 	private Brand brand;
@@ -49,5 +52,8 @@ public class Car {
 	
 	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<CarMaintenance> carMaintenances;
+	
+	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<CarDamage> carDamages;
 
 }

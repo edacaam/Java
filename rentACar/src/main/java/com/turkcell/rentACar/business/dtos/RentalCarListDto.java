@@ -28,4 +28,8 @@ public class RentalCarListDto {
 	private List<AdditionalServiceListDto> additionalServiceListDtos;
 	
 	private int customerUserId;
+	
+	private Double startingKilometer;
+
+	private Double endingKilometer;
 }

@@ -15,6 +15,8 @@ public interface CarService {
 	Result delete(int id);
 
 	Result update(UpdateCarRequest updateCarRequest);
+	
+	Result updateKilometer(int id, double kilometer);
 
 	DataResult<List<CarListDto>> getByDailyPrice(double dailyPrice);
 
