@@ -28,7 +28,6 @@ public class BrandsController {
 	private BrandService brandService;
 
 	public BrandsController(BrandService brandService) {
-		super();
 		this.brandService = brandService;
 	}
 

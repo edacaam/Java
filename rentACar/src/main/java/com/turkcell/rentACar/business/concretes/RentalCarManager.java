@@ -14,6 +14,7 @@ import com.turkcell.rentACar.business.abstracts.CarMaintenanceService;
 import com.turkcell.rentACar.business.abstracts.CarService;
 import com.turkcell.rentACar.business.abstracts.OrderedAdditionalServiceService;
 import com.turkcell.rentACar.business.abstracts.RentalCarService;
+import com.turkcell.rentACar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentACar.business.dtos.CarMaintenanceListDto;
 import com.turkcell.rentACar.business.dtos.GetCarDto;
 import com.turkcell.rentACar.business.dtos.GetRentalCarDto;
@@ -66,7 +67,7 @@ public class RentalCarManager implements RentalCarService {
 		rentalCar.setRentalCarId(0);
 
 		this.rentalCarDao.save(rentalCar);
-		return new SuccessResult("Rental car added successfully.");
+		return new SuccessResult(BusinessMessages.RENTAL_CAR_ADDED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -76,7 +77,7 @@ public class RentalCarManager implements RentalCarService {
 
 		GetRentalCarDto response = this.modelMapperService.forDto().map(result, GetRentalCarDto.class);
 
-		return new SuccessDataResult<GetRentalCarDto>(response, "Rental car has been received successfully.");
+		return new SuccessDataResult<GetRentalCarDto>(response, BusinessMessages.RENTAL_CAR_GET_SUCCESSFULLY);
 	}
 
 	@Override
@@ -88,7 +89,7 @@ public class RentalCarManager implements RentalCarService {
 				.map(rentalCar -> this.modelMapperService.forDto().map(rentalCar, RentalCarListDto.class))
 				.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<RentalCarListDto>>(response, "Rental car has been received successfully.");
+		return new SuccessDataResult<List<RentalCarListDto>>(response, BusinessMessages.RENTAL_CAR_LISTED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -102,7 +103,7 @@ public class RentalCarManager implements RentalCarService {
 				.map(rentalCar -> this.modelMapperService.forDto().map(rentalCar, RentalCarListDto.class))
 				.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<RentalCarListDto>>(response, "Rental cars listed successfully.");
+		return new SuccessDataResult<List<RentalCarListDto>>(response, BusinessMessages.RENTAL_CAR_LISTED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -116,7 +117,7 @@ public class RentalCarManager implements RentalCarService {
 				.map(rentalCar -> this.modelMapperService.forDto().map(rentalCar, RentalCarListDto.class))
 				.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<RentalCarListDto>>(response, "Rental cars listed successfully.");
+		return new SuccessDataResult<List<RentalCarListDto>>(response, BusinessMessages.RENTAL_CAR_LISTED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -130,7 +131,7 @@ public class RentalCarManager implements RentalCarService {
 		List<RentalCarListDto> response = result.stream()
 				.map(rentalCar -> this.modelMapperService.forDto().map(rentalCar, RentalCarListDto.class))
 				.collect(Collectors.toList());
-		return new SuccessDataResult<List<RentalCarListDto>>(response, "Rental cars listed successfully.");
+		return new SuccessDataResult<List<RentalCarListDto>>(response, BusinessMessages.RENTAL_CAR_LISTED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -149,14 +150,14 @@ public class RentalCarManager implements RentalCarService {
 				.setStartingKilometer(carService.getById(rentalCarUpdate.getCar().getCarId()).getData().getKilometer());
 
 		this.rentalCarDao.save(rentalCarUpdate);
-		return new SuccessResult("Rental car is updated.");
+		return new SuccessResult(BusinessMessages.RENTAL_CAR_UPDATED_SUCCESSFULLY);
 	}
 
 	@Override
 	public Result delete(int id) {
 		checkIfRentalCarIsExists(id);
 		this.rentalCarDao.deleteById(id);
-		return new SuccessResult("Rental car deleted successfully.");
+		return new SuccessResult(BusinessMessages.RENTAL_CAR_DELETED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -185,7 +186,7 @@ public class RentalCarManager implements RentalCarService {
 		GetCarDto result = this.carService.getById(carId).getData();
 
 		if (result == null) {
-			throw new BusinessException("No car found with this id.");
+			throw new BusinessException(BusinessMessages.CAR_NOT_FOUND);
 		}
 	}
 

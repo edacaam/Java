@@ -29,7 +29,7 @@ public class RentalCar {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "rental_car_id")
-	private int rentalCarId;
+	private Integer rentalCarId;
 
 	@Column(name = "starting_date")
 	private LocalDate startingDate;
@@ -64,4 +64,7 @@ public class RentalCar {
 	
 	@OneToOne(mappedBy = "rentalCar")
 	private Invoice invoice;
+	
+	 @OneToMany(mappedBy = "customer")
+	 private List<Payment> payments;
 }

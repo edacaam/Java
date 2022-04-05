@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.turkcell.rentACar.business.abstracts.CityService;
+import com.turkcell.rentACar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentACar.business.dtos.CityListDto;
 import com.turkcell.rentACar.business.dtos.GetCityDto;
 import com.turkcell.rentACar.business.requests.CreateCityRequest;
@@ -19,6 +21,7 @@ import com.turkcell.rentACar.dataAccess.abstracts.CityDao;
 import com.turkcell.rentACar.entities.concretes.City;
 import com.turkcell.rentACar.exceptions.concretes.BusinessException;
 
+@Service
 public class CityManager implements CityService {
 
 	private CityDao cityDao;
@@ -26,7 +29,6 @@ public class CityManager implements CityService {
 
 	@Autowired
 	public CityManager(CityDao cityDao, ModelMapperService modelMapperService) {
-		super();
 		this.cityDao = cityDao;
 		this.modelMapperService = modelMapperService;
 	}
@@ -36,13 +38,13 @@ public class CityManager implements CityService {
 		City city = this.modelMapperService.forRequest().map(createCityRequest, City.class);
 		checkIfCityIsExists(createCityRequest.getName());
 		this.cityDao.save(city);
-		return new SuccessResult("City added successfully.");
+		return new SuccessResult(BusinessMessages.CITY_ADDED_SUCCESSFULLY);
 	}
 
 	@Override
 	public Result delete(int id) {
 		this.cityDao.deleteById(id);
-		return new SuccessResult("City deleted successfully.");
+		return new SuccessResult(BusinessMessages.CITY_DELETED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -50,14 +52,14 @@ public class CityManager implements CityService {
 		City city = this.modelMapperService.forRequest().map(updateCityRequest, City.class);
 		checkIfCityNameIsExists(city);
 		this.cityDao.save(city);
-		return new SuccessResult("City updated successfully.");
+		return new SuccessResult(BusinessMessages.CITY_UPDATED_SUCCESSFULLY);
 	}
 
 	@Override
 	public DataResult<GetCityDto> getById(int id) {
 		City city = cityDao.findById(id);
 		GetCityDto response = this.modelMapperService.forDto().map(city, GetCityDto.class);
-		return new SuccessDataResult<GetCityDto>(response, "Getting city by id");
+		return new SuccessDataResult<GetCityDto>(response, BusinessMessages.CITY_GET_SUCCESSFULLY);
 	}
 
 	@Override
@@ -66,7 +68,7 @@ public class CityManager implements CityService {
 		List<CityListDto> response = result.stream()
 				.map(city -> this.modelMapperService.forDto().map(city, CityListDto.class))
 				.collect(Collectors.toList());
-		return new SuccessDataResult<List<CityListDto>>(response, "All cities are listed.");
+		return new SuccessDataResult<List<CityListDto>>(response, BusinessMessages.CITY_LISTED_SUCCESSFULLY);
 	}
 
 	private void checkIfCityIsExists(String name) {

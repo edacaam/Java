@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.turkcell.rentACar.business.abstracts.ColorService;
+import com.turkcell.rentACar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentACar.business.dtos.ColorListDto;
 import com.turkcell.rentACar.business.dtos.GetColorDto;
 import com.turkcell.rentACar.business.requests.CreateColorRequest;
@@ -28,7 +29,6 @@ public class ColorManager implements ColorService {
 
 	@Autowired
 	public ColorManager(ColorDao colorDao, ModelMapperService modelMapperService) {
-		super();
 		this.colorDao = colorDao;
 		this.modelMapperService = modelMapperService;
 	}
@@ -40,15 +40,15 @@ public class ColorManager implements ColorService {
 		List<ColorListDto> response = result.stream()
 				.map(color -> this.modelMapperService.forDto().map(color, ColorListDto.class))
 				.collect(Collectors.toList());
-		return new SuccessDataResult<List<ColorListDto>>(response, "Colors listed successfully.");
+		return new SuccessDataResult<List<ColorListDto>>(response, BusinessMessages.COLOR_LISTED_SUCCESSFULLY);
 	}
 
 	@Override
-	public Result add(CreateColorRequest createColorRequest){
+	public Result add(CreateColorRequest createColorRequest) {
 		Color color = this.modelMapperService.forRequest().map(createColorRequest, Color.class);
 		checkIfColorExists(createColorRequest.getName());
 		this.colorDao.save(color);
-		return new SuccessResult("Color added successfully.");
+		return new SuccessResult(BusinessMessages.COLOR_ADDED_SUCCESSFULLY);
 
 	}
 
@@ -56,16 +56,32 @@ public class ColorManager implements ColorService {
 	public DataResult<GetColorDto> getById(int id) {
 		Color color = colorDao.findById(id);
 		GetColorDto response = this.modelMapperService.forDto().map(color, GetColorDto.class);
-		return new SuccessDataResult<GetColorDto>(response, "Getting color by id");
+		return new SuccessDataResult<GetColorDto>(response, BusinessMessages.COLOR_GET_SUCCESSFULLY);
 	}
 
-	private void checkIfColorExists(String name){
+	@Override
+	public Result delete(int id) {
+		this.colorDao.deleteById(id);
+		return new SuccessResult(BusinessMessages.COLOR_DELETED_SUCCESSFULLY);
+
+	}
+
+	@Override
+	public Result update(UpdateColorRequest updateColorRequest) {
+		Color color = this.modelMapperService.forRequest().map(updateColorRequest, Color.class);
+		checkIfColorNameExists(color);
+		this.colorDao.save(color);
+		return new SuccessResult(BusinessMessages.COLOR_UPDATED_SUCCESSFULLY);
+
+	}
+
+	private void checkIfColorExists(String name) {
 		if (this.colorDao.existsByColorName(name)) {
 			throw new BusinessException("Aynı isimde renk eklenemez");
 		}
 	}
 
-	private void checkIfColorNameExists(Color color){
+	private void checkIfColorNameExists(Color color) {
 
 		Color ifExsistsColor = this.colorDao.findByColorName(color.getColorName());
 
@@ -73,21 +89,4 @@ public class ColorManager implements ColorService {
 			throw new BusinessException("Aynı isimde renk eklenemez");
 		}
 	}
-
-	@Override
-	public Result delete(int id) {
-		this.colorDao.deleteById(id);
-		return new SuccessResult("Color deleted successfully.");
-
-	}
-
-	@Override
-	public Result update(UpdateColorRequest updateColorRequest){
-		Color color = this.modelMapperService.forRequest().map(updateColorRequest, Color.class);
-		checkIfColorNameExists(color);
-		this.colorDao.save(color);
-		return new SuccessResult("Color updated successfully.");
-
-	}
-
 }

@@ -10,11 +10,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-
 import com.turkcell.rentACar.business.abstracts.CarDamageService;
+import com.turkcell.rentACar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentACar.business.dtos.CarDamageListDto;
 import com.turkcell.rentACar.business.dtos.GetCarDamageDto;
-import com.turkcell.rentACar.business.dtos.RentalCarListDto;
 import com.turkcell.rentACar.business.requests.CreateCarDamageRequest;
 import com.turkcell.rentACar.business.requests.UpdateCarDamageRequest;
 import com.turkcell.rentACar.core.utilities.mapping.ModelMapperService;
@@ -24,7 +23,6 @@ import com.turkcell.rentACar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentACar.core.utilities.results.SuccessResult;
 import com.turkcell.rentACar.dataAccess.abstracts.CarDamageDao;
 import com.turkcell.rentACar.entities.concretes.CarDamage;
-import com.turkcell.rentACar.entities.concretes.RentalCar;
 
 @Service
 public class CarDamageManager implements CarDamageService {
@@ -42,27 +40,27 @@ public class CarDamageManager implements CarDamageService {
 	public Result add(CreateCarDamageRequest createCarDamageRequest) {
 		CarDamage carDamage = this.modelMapperService.forRequest().map(createCarDamageRequest, CarDamage.class);
 		carDamageDao.save(carDamage);
-		return new SuccessResult("Car damage added successfully.");
+		return new SuccessResult(BusinessMessages.CAR_DAMAGE_ADDED_SUCCESSFULLY);
 	}
 
 	@Override
 	public Result delete(int id) {
 		this.carDamageDao.deleteById(id);
-		return new SuccessResult("Car damage deleted successfully.");
+		return new SuccessResult(BusinessMessages.CAR_DAMAGE_DELETED_SUCCESSFULLY);
 	}
 
 	@Override
 	public Result update(UpdateCarDamageRequest updateCarDamageRequest) {
 		CarDamage carDamage = this.modelMapperService.forRequest().map(updateCarDamageRequest, CarDamage.class);
 		carDamageDao.save(carDamage);
-		return new SuccessResult("Car damage updated successfully.");
+		return new SuccessResult(BusinessMessages.CAR_DAMAGE_UPDATED_SUCCESSFULLY);
 	}
 
 	@Override
 	public DataResult<GetCarDamageDto> getById(int id) {
 		CarDamage carDamage = this.carDamageDao.getById(id);
 		GetCarDamageDto response = this.modelMapperService.forDto().map(carDamage, GetCarDamageDto.class);
-		return new SuccessDataResult<GetCarDamageDto>(response, "Car damage has been received successfully.");
+		return new SuccessDataResult<GetCarDamageDto>(response, BusinessMessages.CAR_DAMAGE_GET_SUCCESSFULLY);
 	}
 
 	@Override
@@ -71,7 +69,7 @@ public class CarDamageManager implements CarDamageService {
 		List<CarDamageListDto> response = result.stream()
 				.map(carDamage -> this.modelMapperService.forDto().map(carDamage, CarDamageListDto.class))
 				.collect(Collectors.toList());
-		return new SuccessDataResult<List<CarDamageListDto>>(response, "Car damages listed successfully.");
+		return new SuccessDataResult<List<CarDamageListDto>>(response, BusinessMessages.CAR_DAMAGE_LISTED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -84,7 +82,7 @@ public class CarDamageManager implements CarDamageService {
 				.map(carDamage -> this.modelMapperService.forDto().map(carDamage, CarDamageListDto.class))
 				.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<CarDamageListDto>>(response, "Car damages listed successfully.");
+		return new SuccessDataResult<List<CarDamageListDto>>(response, BusinessMessages.CAR_DAMAGE_LISTED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -98,7 +96,7 @@ public class CarDamageManager implements CarDamageService {
 				.map(carDamage -> this.modelMapperService.forDto().map(carDamage, CarDamageListDto.class))
 				.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<CarDamageListDto>>(response, "Car damages listed successfully.");
+		return new SuccessDataResult<List<CarDamageListDto>>(response, BusinessMessages.CAR_DAMAGE_LISTED_SUCCESSFULLY);
 	}
 
 }

@@ -25,13 +25,13 @@ public class AdditionalService {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="additional_service_id")
-	private int additionalServiceId;
+	private Integer additionalServiceId;
 	
 	@Column(name="name")
 	private String name;
 	
 	@Column(name="daily_price")
-	private double dailyPrice;
+	private Double dailyPrice;
 	
 	@OneToMany(mappedBy = "additionalService", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<OrderedAdditionalService> orderedAdditionalServices;

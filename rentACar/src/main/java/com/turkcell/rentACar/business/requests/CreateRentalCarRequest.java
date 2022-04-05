@@ -6,7 +6,6 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import com.turkcell.rentACar.entities.concretes.City;
 import com.turkcell.rentACar.entities.concretes.OrderedAdditionalService;
 
 import lombok.AllArgsConstructor;
@@ -17,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateRentalCarRequest {
+	
 	@NotNull
 	private LocalDate startingDate;
 	@NotNull

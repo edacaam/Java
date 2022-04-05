@@ -28,13 +28,13 @@ public class Car {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="car_id")
-	private int carId;
+	private Integer carId;
 	
 	@Column(name="daily_price")
-	private double dailyPrice;
+	private Double dailyPrice;
 	
 	@Column(name="model_year")
-	private int modelYear;
+	private Integer modelYear;
 	
 	@Column(name="description")
 	private String description;

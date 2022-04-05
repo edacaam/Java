@@ -1,7 +1,5 @@
 package com.turkcell.rentACar.entities.concretes;
 
-import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,40 +14,30 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "invoices")
-public class Invoice {
+@Table(name = "payments")
+public class Payment {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "invoice_id")
-	private Integer invoiceId;
+	@Column(name = "payment_id")
+	private Integer id;
 	
-	@Column(name = "invoice_number")
-	private String invoiceNumber;
-	
-	@Column(name = "creation_date")
-	private LocalDate creationDate;
-	
-	@Column(name = "rent_start_date")
-	private LocalDate rentStartDate;
-	
-	@Column(name = "rent_return_date")
-	private LocalDate rentEndDate;
-	
-	@Column(name = "total_rent_day")
-	private Integer totalRentDay;
-	
-	@Column(name = "total_price")
-	private Double totalPrice;
-	
+	@Column(name = "amount")
+	private Double amount;
+
 	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private Customer customer;
-	
-	@OneToOne
 	@JoinColumn(name = "rental_car_id")
 	private RentalCar rentalCar;
+
+	@OneToOne
+	@JoinColumn(name = "invoice_id")
+	private Invoice invoice;
+	
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 }

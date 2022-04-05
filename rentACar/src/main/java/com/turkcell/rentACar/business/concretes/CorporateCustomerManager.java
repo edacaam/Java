@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.turkcell.rentACar.business.abstracts.CorporateCustomerService;
+import com.turkcell.rentACar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentACar.business.dtos.CorporateCustomerListDto;
 import com.turkcell.rentACar.business.dtos.GetCorporateCustomerDto;
 import com.turkcell.rentACar.business.requests.CreateCorporateCustomerRequest;
@@ -24,47 +25,51 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 
 	private CorporateCustomerDao corporateCustomerDao;
 	private ModelMapperService modelMapperService;
-	
+
 	@Autowired
 	public CorporateCustomerManager(CorporateCustomerDao corporateCustomerDao, ModelMapperService modelMapperService) {
-		super();
 		this.corporateCustomerDao = corporateCustomerDao;
 		this.modelMapperService = modelMapperService;
 	}
 
 	@Override
 	public Result add(CreateCorporateCustomerRequest createCorporateCustomerRequest) {
-		CorporateCustomer corporateCustomer = this.modelMapperService.forRequest().map(createCorporateCustomerRequest, CorporateCustomer.class);
+		CorporateCustomer corporateCustomer = this.modelMapperService.forRequest().map(createCorporateCustomerRequest,
+				CorporateCustomer.class);
 		corporateCustomerDao.save(corporateCustomer);
-		return new SuccessResult("Corporate customer added successfully.");
-	
+		return new SuccessResult(BusinessMessages.CORPORATE_CUSTOMER_ADDED_SUCCESSFULLY);
+
 	}
 
 	@Override
 	public Result delete(int id) {
 		this.corporateCustomerDao.deleteById(id);
-		return new SuccessResult("Corporate customer deleted successfully.");
+		return new SuccessResult(BusinessMessages.CORPORATE_CUSTOMER_DELETED_SUCCESSFULLY);
 	}
 
 	@Override
 	public Result update(UpdateCorporateCustomerRequest updateCorporateCustomerRequest) {
-		CorporateCustomer corporateCustomer = this.modelMapperService.forRequest().map(updateCorporateCustomerRequest, CorporateCustomer.class);
+		CorporateCustomer corporateCustomer = this.modelMapperService.forRequest().map(updateCorporateCustomerRequest,
+				CorporateCustomer.class);
 		corporateCustomerDao.save(corporateCustomer);
-		return new SuccessResult("Corporate customer updated successfully.");
+		return new SuccessResult(BusinessMessages.CORPORATE_CUSTOMER_UPDATED_SUCCESSFULLY);
 	}
 
 	@Override
 	public DataResult<GetCorporateCustomerDto> getById(int id) {
 		CorporateCustomer corporateCustomer = this.corporateCustomerDao.getById(id);
-		GetCorporateCustomerDto response = this.modelMapperService.forDto().map(corporateCustomer, GetCorporateCustomerDto.class);
-		return new SuccessDataResult<GetCorporateCustomerDto>(response, "Getting corporate customer by id");
+		GetCorporateCustomerDto response = this.modelMapperService.forDto().map(corporateCustomer,
+				GetCorporateCustomerDto.class);
+		return new SuccessDataResult<GetCorporateCustomerDto>(response,
+				BusinessMessages.CORPORATE_CUSTOMER_GET_SUCCESSFULLY);
 	}
 
 	@Override
 	public DataResult<List<CorporateCustomerListDto>> getAll() {
 		List<CorporateCustomer> result = this.corporateCustomerDao.findAll();
-		List<CorporateCustomerListDto> response = result.stream()
-				.map(corporateCustomer -> this.modelMapperService.forDto().map(corporateCustomer, CorporateCustomerListDto.class)).collect(Collectors.toList());
-		return new SuccessDataResult<List<CorporateCustomerListDto>>(response, "Corporate customers listed successfully.");
+		List<CorporateCustomerListDto> response = result.stream().map(corporateCustomer -> this.modelMapperService
+				.forDto().map(corporateCustomer, CorporateCustomerListDto.class)).collect(Collectors.toList());
+		return new SuccessDataResult<List<CorporateCustomerListDto>>(response,
+				BusinessMessages.CORPORATE_CUSTOMER_LISTED_SUCCESSFULLY);
 	}
 }

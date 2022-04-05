@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.turkcell.rentACar.business.abstracts.OrderedAdditionalServiceService;
+import com.turkcell.rentACar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentACar.core.utilities.results.Result;
 import com.turkcell.rentACar.core.utilities.results.SuccessResult;
 import com.turkcell.rentACar.dataAccess.abstracts.OrderedAdditonalServiceDao;
@@ -15,14 +16,13 @@ public class OrderedAdditionalServiceManager implements OrderedAdditionalService
 	
 	@Autowired
 	public OrderedAdditionalServiceManager(OrderedAdditonalServiceDao orderedAdditionalServiceDao) {
-		super();
 		this.orderedAdditionalServiceDao = orderedAdditionalServiceDao;
 	}
 
 	@Override
 	public Result deleteAll(int rentalCarId) {
 		orderedAdditionalServiceDao.deleteAll(orderedAdditionalServiceDao.findByRentalCar_RentalCarId(rentalCarId));
-		return new SuccessResult("Ordered additional services deleted successfully");
+		return new SuccessResult(BusinessMessages.ORDERED_ADDITIONAL_SERVICE_DELETED_SUCCESSFULLY);
 		
 	}
 

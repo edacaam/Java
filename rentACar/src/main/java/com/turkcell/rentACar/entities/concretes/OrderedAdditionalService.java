@@ -22,7 +22,7 @@ public class OrderedAdditionalService {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ordered_additional_service_id")
-	private int orderedAdditionalServiceId;
+	private Integer orderedAdditionalServiceId;
 	
 	@ManyToOne
 	private RentalCar rentalCar;
