@@ -12,6 +12,7 @@ import com.turkcell.rentACar.business.dtos.ColorListDto;
 import com.turkcell.rentACar.business.dtos.GetColorDto;
 import com.turkcell.rentACar.business.requests.CreateColorRequest;
 import com.turkcell.rentACar.business.requests.UpdateColorRequest;
+import com.turkcell.rentACar.core.utilities.exceptions.BusinessException;
 import com.turkcell.rentACar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.Result;
@@ -19,7 +20,6 @@ import com.turkcell.rentACar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentACar.core.utilities.results.SuccessResult;
 import com.turkcell.rentACar.dataAccess.abstracts.ColorDao;
 import com.turkcell.rentACar.entities.concretes.Color;
-import com.turkcell.rentACar.exceptions.concretes.BusinessException;
 
 @Service
 public class ColorManager implements ColorService {
@@ -34,59 +34,86 @@ public class ColorManager implements ColorService {
 	}
 
 	@Override
-	public DataResult<List<ColorListDto>> getAll() {
-
-		List<Color> result = this.colorDao.findAll();
-		List<ColorListDto> response = result.stream()
-				.map(color -> this.modelMapperService.forDto().map(color, ColorListDto.class))
-				.collect(Collectors.toList());
-		return new SuccessDataResult<List<ColorListDto>>(response, BusinessMessages.COLOR_LISTED_SUCCESSFULLY);
-	}
-
-	@Override
 	public Result add(CreateColorRequest createColorRequest) {
+
+		checkIfColorExistsByName(createColorRequest.getName());
+
 		Color color = this.modelMapperService.forRequest().map(createColorRequest, Color.class);
-		checkIfColorExists(createColorRequest.getName());
+
 		this.colorDao.save(color);
+
 		return new SuccessResult(BusinessMessages.COLOR_ADDED_SUCCESSFULLY);
-
-	}
-
-	@Override
-	public DataResult<GetColorDto> getById(int id) {
-		Color color = colorDao.findById(id);
-		GetColorDto response = this.modelMapperService.forDto().map(color, GetColorDto.class);
-		return new SuccessDataResult<GetColorDto>(response, BusinessMessages.COLOR_GET_SUCCESSFULLY);
 	}
 
 	@Override
 	public Result delete(int id) {
+
+		checkIfColorExistsById(id);
+
 		this.colorDao.deleteById(id);
+
 		return new SuccessResult(BusinessMessages.COLOR_DELETED_SUCCESSFULLY);
 
 	}
 
 	@Override
 	public Result update(UpdateColorRequest updateColorRequest) {
+
+		checkIfColorExistsById(updateColorRequest.getId());
+
 		Color color = this.modelMapperService.forRequest().map(updateColorRequest, Color.class);
-		checkIfColorNameExists(color);
+
+		checkIfUpdatedColorExistsByName(color);
+
 		this.colorDao.save(color);
+
 		return new SuccessResult(BusinessMessages.COLOR_UPDATED_SUCCESSFULLY);
 
 	}
 
-	private void checkIfColorExists(String name) {
-		if (this.colorDao.existsByColorName(name)) {
-			throw new BusinessException("Aynı isimde renk eklenemez");
+	@Override
+	public DataResult<GetColorDto> getById(int id) {
+
+		checkIfColorExistsById(id);
+
+		Color color = colorDao.getById(id);
+
+		GetColorDto response = this.modelMapperService.forDto().map(color, GetColorDto.class);
+
+		return new SuccessDataResult<>(response, BusinessMessages.COLOR_GET_SUCCESSFULLY);
+	}
+
+	@Override
+	public DataResult<List<ColorListDto>> getAll() {
+
+		List<Color> result = this.colorDao.findAll();
+
+		List<ColorListDto> response = result.stream()
+				.map(color -> this.modelMapperService.forDto().map(color, ColorListDto.class))
+				.collect(Collectors.toList());
+
+		return new SuccessDataResult<>(response, BusinessMessages.COLOR_LISTED_SUCCESSFULLY);
+	}
+
+	@Override
+	public void checkIfColorExistsById(int id) {
+		if (!this.colorDao.existsById(id)) {
+			throw new BusinessException(BusinessMessages.COLOR_NOT_FOUND);
 		}
 	}
 
-	private void checkIfColorNameExists(Color color) {
+	private void checkIfColorExistsByName(String name) {
+		if (this.colorDao.existsByColorName(name)) {
+			throw new BusinessException(BusinessMessages.COLOR_NAME_ALREADY_EXISTS);
+		}
+	}
 
-		Color ifExsistsColor = this.colorDao.findByColorName(color.getColorName());
+	private void checkIfUpdatedColorExistsByName(Color color) {
 
-		if (ifExsistsColor != null && ifExsistsColor.getColorId() != color.getColorId()) {
-			throw new BusinessException("Aynı isimde renk eklenemez");
+		Color exsistsColor = this.colorDao.findByColorName(color.getColorName());
+
+		if (exsistsColor != null && !exsistsColor.getId().equals(color.getId())) {
+			throw new BusinessException(BusinessMessages.COLOR_NAME_ALREADY_EXISTS);
 		}
 	}
 }

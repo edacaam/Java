@@ -16,7 +16,7 @@ public class UpdateCarRequest {
 
 	@NotNull
 	@Positive
-	private int carId;
+	private int id;
 	
 	@NotNull
 	@Min(0)

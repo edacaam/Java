@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 import com.turkcell.rentACar.entities.concretes.CorporateCustomer;
 
 @Repository
-public interface CorporateCustomerDao extends JpaRepository<CorporateCustomer, Integer>{
+public interface CorporateCustomerDao extends JpaRepository<CorporateCustomer, Integer> {
 
+	boolean existsByTaxNumber(String taxNumber);
+
+	CorporateCustomer findByTaxNumber(String taxNumber);
 }

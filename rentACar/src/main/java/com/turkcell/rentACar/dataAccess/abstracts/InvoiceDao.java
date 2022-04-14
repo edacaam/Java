@@ -10,8 +10,8 @@ import com.turkcell.rentACar.entities.concretes.Invoice;
 
 @Repository
 public interface InvoiceDao extends JpaRepository<Invoice, Integer> {
-	
+
 	List<Invoice> findByCustomerUserId(int customerId);
-	
-	List<Invoice> findByCreationDateBetween(LocalDate startDate,LocalDate endDate);
+
+	List<Invoice> findByCreationDateBetween(LocalDate startDate, LocalDate endDate);
 }

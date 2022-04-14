@@ -14,16 +14,16 @@ import lombok.NoArgsConstructor;
 public class CreateCorporateCustomerRequest {
 	@NotNull
 	@Email
-	private String eMail;
-	
+	private String email;
+
 	@NotNull
 	private String password;
-	
+
 	@NotNull
-	@Size(min = 2,max = 30)
+	@Size(min = 2, max = 30)
 	private String companyName;
-	
+
 	@NotNull
-	@Size(min = 2,max = 30)
+	@Size(min = 2, max = 30)
 	private String taxNumber;
 }

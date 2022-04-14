@@ -28,7 +28,6 @@ public class ColorsController {
 	private final ColorService colorService;
 
 	public ColorsController(ColorService colorService) {
-		super();
 		this.colorService = colorService;
 	}
 
@@ -38,7 +37,7 @@ public class ColorsController {
 	}
 
 	@PostMapping("/add")
-	public Result add(@RequestBody @Valid CreateColorRequest createColorRequest){
+	public Result add(@RequestBody @Valid CreateColorRequest createColorRequest) {
 		return this.colorService.add(createColorRequest);
 	}
 
@@ -53,8 +52,7 @@ public class ColorsController {
 	}
 
 	@PutMapping("/update")
-	public Result update(@RequestBody @Valid UpdateColorRequest updateColorRequest){
+	public Result update(@RequestBody @Valid UpdateColorRequest updateColorRequest) {
 		return this.colorService.update(updateColorRequest);
 	}
-
 }

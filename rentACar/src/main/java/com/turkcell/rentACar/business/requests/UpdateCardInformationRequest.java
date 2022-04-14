@@ -4,13 +4,19 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateCardInformationRequest {
-	
+
 	@NotNull
 	@Positive
-	private String id;
-	
+	private Integer id;
+
 	@NotNull
 	private String cardNo;
 
@@ -18,11 +24,11 @@ public class UpdateCardInformationRequest {
 	private String cardHolder;
 
 	@NotNull
-	@Size(min=1,max=2)
+	@Size(min = 1, max = 2)
 	private String expirationMonth;
 
 	@NotNull
-	@Size(min=1,max=2)
+	@Size(min = 1, max = 2)
 	private String expirationYear;
 
 	@NotNull

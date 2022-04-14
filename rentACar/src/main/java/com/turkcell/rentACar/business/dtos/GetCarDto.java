@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GetCarDto {
 	
-	private int carId;
+	private int id;
 	
 	private double dailyPrice;
 	

@@ -10,6 +10,7 @@ import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.Result;
 
 public interface CorporateCustomerService {
+
 	Result add(CreateCorporateCustomerRequest createCorporateCustomerRequest);
 
 	Result delete(int id);
@@ -19,4 +20,6 @@ public interface CorporateCustomerService {
 	DataResult<GetCorporateCustomerDto> getById(int id);
 
 	DataResult<List<CorporateCustomerListDto>> getAll();
+
+	void checkIfCorporateCustomerExistsById(int id);
 }

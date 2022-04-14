@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 public class CorporateCustomerListDto {
 	private int userId;
 
-	private String eMail;
+	private String email;
 
 	private String password;
-	
+
 	private String companyName;
-	
+
 	private String taxNumber;
 }

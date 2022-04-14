@@ -12,12 +12,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateAdditionalServiceRequest {
+
 	@NotNull
 	@Positive
-	private int additionalServiceId;
+	private int id;
+
 	@NotNull
 	@Min(0)
 	private double dailyPrice;
+
 	@NotNull
 	private String name;
 }

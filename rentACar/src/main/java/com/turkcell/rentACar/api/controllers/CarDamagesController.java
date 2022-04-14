@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,8 +22,6 @@ import com.turkcell.rentACar.business.requests.CreateCarDamageRequest;
 import com.turkcell.rentACar.business.requests.UpdateCarDamageRequest;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.Result;
-
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/api/carDamages")
@@ -38,6 +37,7 @@ public class CarDamagesController {
 	public Result add(@RequestBody @Valid CreateCarDamageRequest createCarDamageRequest) {
 		return carDamageService.add(createCarDamageRequest);
 	}
+
 	@DeleteMapping("/delete/{id}")
 	public Result delete(@RequestParam int id) {
 		return carDamageService.delete(id);
@@ -47,12 +47,12 @@ public class CarDamagesController {
 	public Result update(@RequestBody @Valid UpdateCarDamageRequest updateCarDamageRequest) {
 		return this.carDamageService.update(updateCarDamageRequest);
 	}
-	
+
 	@GetMapping("/getAll")
 	public DataResult<List<CarDamageListDto>> getAll() {
 		return carDamageService.getAll();
 	}
-	
+
 	@GetMapping("/getById/{id}")
 	public DataResult<GetCarDamageDto> getById(@RequestParam int id) {
 		return carDamageService.getById(id);

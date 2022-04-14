@@ -12,10 +12,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateBrandRequest {
+
 	@NotNull
 	@Positive
-	private int brandId;
+	private int id;
+
 	@NotNull
-	@Size(min=2,max=50)
+	@Size(min = 2, max = 50)
 	private String brandName;
 }

@@ -27,10 +27,10 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Integer userId;
-	
-	@Column(name = "e_mail")
-	private String eMail;
-	
+
+	@Column(name = "email")
+	private String email;
+
 	@Column(name = "password")
 	private String password;
 }

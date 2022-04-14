@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CarDamageListDto {
-	
+
 	private int id;
-	
+
 	private String description;
-	
+
 	private int carId;
 }

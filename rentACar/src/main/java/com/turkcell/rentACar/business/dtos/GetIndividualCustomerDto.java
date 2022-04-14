@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 public class GetIndividualCustomerDto {
 	private int userId;
 
-	private String eMail;
+	private String email;
 
 	private String password;
-	
+
 	private String firstName;
 
 	private String lastName;

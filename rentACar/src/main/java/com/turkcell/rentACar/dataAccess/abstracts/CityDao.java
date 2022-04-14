@@ -8,8 +8,6 @@ import com.turkcell.rentACar.entities.concretes.City;
 @Repository
 public interface CityDao extends JpaRepository<City, Integer> {
 
-	City findById(int id);
-
 	City findByName(String name);
 
 	boolean existsByName(String name);

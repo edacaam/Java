@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CarListDto {
 
-	private int carId;
+	private int id;
 	
 	private double dailyPrice;
 	

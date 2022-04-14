@@ -22,6 +22,7 @@ import com.turkcell.rentACar.business.dtos.RentalCarListDto;
 import com.turkcell.rentACar.business.requests.CreateRentalCarRequest;
 import com.turkcell.rentACar.business.requests.EndOfRentRequest;
 import com.turkcell.rentACar.business.requests.UpdateRentalCarRequest;
+import com.turkcell.rentACar.core.utilities.exceptions.BusinessException;
 import com.turkcell.rentACar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.ErrorDataResult;
@@ -30,7 +31,6 @@ import com.turkcell.rentACar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentACar.core.utilities.results.SuccessResult;
 import com.turkcell.rentACar.dataAccess.abstracts.RentalCarDao;
 import com.turkcell.rentACar.entities.concretes.RentalCar;
-import com.turkcell.rentACar.exceptions.concretes.BusinessException;
 
 @Service
 public class RentalCarManager implements RentalCarService {
@@ -63,7 +63,7 @@ public class RentalCarManager implements RentalCarService {
 				.forEach(orderedAdditionalService -> orderedAdditionalService.setRentalCar(rentalCar));
 		checkIfCarIsInMaintenance(rentalCar);
 
-		rentalCar.setStartingKilometer(carService.getById(rentalCar.getCar().getCarId()).getData().getKilometer());
+		rentalCar.setStartingKilometer(carService.getById(rentalCar.getCar().getId()).getData().getKilometer());
 		rentalCar.setRentalCarId(0);
 
 		this.rentalCarDao.save(rentalCar);
@@ -73,11 +73,11 @@ public class RentalCarManager implements RentalCarService {
 	@Override
 	public DataResult<GetRentalCarDto> getById(int rentalId) {
 
-		RentalCar result = this.rentalCarDao.findById(rentalId);
+		RentalCar result = this.rentalCarDao.getById(rentalId);
 
 		GetRentalCarDto response = this.modelMapperService.forDto().map(result, GetRentalCarDto.class);
 
-		return new SuccessDataResult<GetRentalCarDto>(response, BusinessMessages.RENTAL_CAR_GET_SUCCESSFULLY);
+		return new SuccessDataResult<>(response, BusinessMessages.RENTAL_CAR_GET_SUCCESSFULLY);
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class RentalCarManager implements RentalCarService {
 				.map(rentalCar -> this.modelMapperService.forDto().map(rentalCar, RentalCarListDto.class))
 				.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<RentalCarListDto>>(response, BusinessMessages.RENTAL_CAR_LISTED_SUCCESSFULLY);
+		return new SuccessDataResult<>(response, BusinessMessages.RENTAL_CAR_LISTED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class RentalCarManager implements RentalCarService {
 				.map(rentalCar -> this.modelMapperService.forDto().map(rentalCar, RentalCarListDto.class))
 				.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<RentalCarListDto>>(response, BusinessMessages.RENTAL_CAR_LISTED_SUCCESSFULLY);
+		return new SuccessDataResult<>(response, BusinessMessages.RENTAL_CAR_LISTED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -117,21 +117,21 @@ public class RentalCarManager implements RentalCarService {
 				.map(rentalCar -> this.modelMapperService.forDto().map(rentalCar, RentalCarListDto.class))
 				.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<RentalCarListDto>>(response, BusinessMessages.RENTAL_CAR_LISTED_SUCCESSFULLY);
+		return new SuccessDataResult<>(response, BusinessMessages.RENTAL_CAR_LISTED_SUCCESSFULLY);
 	}
 
 	@Override
 	public DataResult<List<RentalCarListDto>> getByCarId(int carId) {
-		List<RentalCar> result = this.rentalCarDao.findByCar_CarId(carId);
+		List<RentalCar> result = this.rentalCarDao.findByCarId(carId);
 
 		if (result.isEmpty()) {
-			return new ErrorDataResult<List<RentalCarListDto>>("Rental cars could not be listed.");
+			return new ErrorDataResult<>("Rental cars could not be listed.");
 		}
 
 		List<RentalCarListDto> response = result.stream()
 				.map(rentalCar -> this.modelMapperService.forDto().map(rentalCar, RentalCarListDto.class))
 				.collect(Collectors.toList());
-		return new SuccessDataResult<List<RentalCarListDto>>(response, BusinessMessages.RENTAL_CAR_LISTED_SUCCESSFULLY);
+		return new SuccessDataResult<>(response, BusinessMessages.RENTAL_CAR_LISTED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -147,7 +147,7 @@ public class RentalCarManager implements RentalCarService {
 		rentalCarUpdate.getOrderedAdditionalServices()
 				.forEach(orderedAdditionalService -> orderedAdditionalService.setRentalCar(rentalCarUpdate));
 		rentalCarUpdate
-				.setStartingKilometer(carService.getById(rentalCarUpdate.getCar().getCarId()).getData().getKilometer());
+				.setStartingKilometer(carService.getById(rentalCarUpdate.getCar().getId()).getData().getKilometer());
 
 		this.rentalCarDao.save(rentalCarUpdate);
 		return new SuccessResult(BusinessMessages.RENTAL_CAR_UPDATED_SUCCESSFULLY);
@@ -167,7 +167,7 @@ public class RentalCarManager implements RentalCarService {
 
 		rentalCar.setEndingKilometer(endOfRentRequest.getEndingKilometer());
 
-		carService.updateKilometer(rentalCar.getCar().getCarId(), rentalCar.getEndingKilometer());
+		carService.updateKilometer(rentalCar.getCar().getId(), rentalCar.getEndingKilometer());
 
 		rentalCarDao.save(rentalCar);
 
@@ -191,7 +191,7 @@ public class RentalCarManager implements RentalCarService {
 	}
 
 	private void checkIfCarIsInMaintenance(RentalCar rentalCar) {
-		List<CarMaintenanceListDto> result = this.carMaintenanceService.getByCarId(rentalCar.getCar().getCarId())
+		List<CarMaintenanceListDto> result = this.carMaintenanceService.getByCarId(rentalCar.getCar().getId())
 				.getData();
 		for (CarMaintenanceListDto carMaintenanceDto : result) {
 			if ((carMaintenanceDto.getReturnDate() != null)

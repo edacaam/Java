@@ -15,7 +15,7 @@ public interface CarService {
 	Result delete(int id);
 
 	Result update(UpdateCarRequest updateCarRequest);
-	
+
 	Result updateKilometer(int id, double kilometer);
 
 	DataResult<List<CarListDto>> getByDailyPrice(double dailyPrice);
@@ -27,4 +27,6 @@ public interface CarService {
 	DataResult<List<CarListDto>> getAllPaged(int pageNo, int pageSize);
 
 	DataResult<List<CarListDto>> getAllSorted(String direction);
+
+	void checkIfCarExistsById(int id);
 }

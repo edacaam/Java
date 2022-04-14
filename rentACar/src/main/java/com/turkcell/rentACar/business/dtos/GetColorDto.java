@@ -8,5 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetColorDto {
+
+	private Integer id;
+
 	private String colorName;
 }

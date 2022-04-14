@@ -12,9 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateCityRequest {
+
 	@NotNull
 	@Positive
-	private int cityId;
+	private int id;
+
 	@NotNull
 	@Size(min = 2, max = 50)
 	private String name;

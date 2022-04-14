@@ -29,5 +29,5 @@ public class CreateCardInformationRequest {
 	private String cvv;
 
 	@Positive
-	private Integer customerId;
+	private int customerId;
 }

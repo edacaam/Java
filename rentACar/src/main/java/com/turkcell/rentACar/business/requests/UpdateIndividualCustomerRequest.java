@@ -15,19 +15,19 @@ public class UpdateIndividualCustomerRequest {
 	@Positive
 	@NotNull
 	private int userId;
-	
+
 	@Email
-	private String eMail;
+	private String email;
 
 	@NotNull
 	private String password;
-	
+
 	@NotNull
 	private String firstName;
-	
+
 	@NotNull
 	private String lastName;
-	
+
 	@NotNull
 	private String nationalIdentity;
 }

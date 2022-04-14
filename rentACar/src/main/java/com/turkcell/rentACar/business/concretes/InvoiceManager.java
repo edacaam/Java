@@ -70,7 +70,7 @@ public class InvoiceManager implements InvoiceService {
 	public DataResult<GetInvoiceDto> getById(int id) {
 		Invoice invoice = invoiceDao.getById(id);
 		GetInvoiceDto response = this.modelMapperService.forDto().map(invoice, GetInvoiceDto.class);
-		return new SuccessDataResult<GetInvoiceDto>(response, BusinessMessages.INVOICE_GET_SUCCESSFULLY);
+		return new SuccessDataResult<>(response, BusinessMessages.INVOICE_GET_SUCCESSFULLY);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class InvoiceManager implements InvoiceService {
 		List<InvoiceListDto> response = result.stream()
 				.map(invoice -> this.modelMapperService.forDto().map(invoice, InvoiceListDto.class))
 				.collect(Collectors.toList());
-		return new SuccessDataResult<List<InvoiceListDto>>(response, BusinessMessages.INVOICE_LISTED_SUCCESSFULLY);
+		return new SuccessDataResult<>(response, BusinessMessages.INVOICE_LISTED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class InvoiceManager implements InvoiceService {
 		List<InvoiceListDto> response = result.stream()
 				.map(invoice -> this.modelMapperService.forDto().map(invoice, InvoiceListDto.class))
 				.collect(Collectors.toList());
-		return new SuccessDataResult<List<InvoiceListDto>>(response, BusinessMessages.INVOICE_LISTED_SUCCESSFULLY);
+		return new SuccessDataResult<>(response, BusinessMessages.INVOICE_LISTED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class InvoiceManager implements InvoiceService {
 		List<InvoiceListDto> response = result.stream()
 				.map(invoice -> this.modelMapperService.forDto().map(invoice, InvoiceListDto.class))
 				.collect(Collectors.toList());
-		return new SuccessDataResult<List<InvoiceListDto>>(response, BusinessMessages.INVOICE_LISTED_SUCCESSFULLY);
+		return new SuccessDataResult<>(response, BusinessMessages.INVOICE_LISTED_SUCCESSFULLY);
 	}
 
 	private void setInvoiceFields(Invoice invoice, GetRentalCarDto rentalCarDto) {

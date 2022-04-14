@@ -12,8 +12,14 @@ import com.turkcell.rentACar.core.utilities.results.Result;
 public interface ColorService {
 
 	DataResult<List<ColorListDto>> getAll();
+
 	Result add(CreateColorRequest createColorRequest);
+
 	DataResult<GetColorDto> getById(int id);
+
 	Result delete(int id);
+
 	Result update(UpdateColorRequest updateColorRequest);
+
+	void checkIfColorExistsById(int id);
 }
