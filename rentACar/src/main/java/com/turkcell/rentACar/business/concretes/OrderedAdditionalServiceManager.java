@@ -13,7 +13,7 @@ import com.turkcell.rentACar.dataAccess.abstracts.OrderedAdditonalServiceDao;
 public class OrderedAdditionalServiceManager implements OrderedAdditionalServiceService {
 
 	private OrderedAdditonalServiceDao orderedAdditionalServiceDao;
-	
+
 	@Autowired
 	public OrderedAdditionalServiceManager(OrderedAdditonalServiceDao orderedAdditionalServiceDao) {
 		this.orderedAdditionalServiceDao = orderedAdditionalServiceDao;
@@ -21,11 +21,9 @@ public class OrderedAdditionalServiceManager implements OrderedAdditionalService
 
 	@Override
 	public Result deleteAll(int rentalCarId) {
-		orderedAdditionalServiceDao.deleteAll(orderedAdditionalServiceDao.findByRentalCar_RentalCarId(rentalCarId));
+		orderedAdditionalServiceDao.deleteAll(orderedAdditionalServiceDao.findByRentalCarId(rentalCarId));
 		return new SuccessResult(BusinessMessages.ORDERED_ADDITIONAL_SERVICE_DELETED_SUCCESSFULLY);
-		
+
 	}
-
-
 
 }

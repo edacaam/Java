@@ -19,5 +19,5 @@ public class CreateInvoiceRequest {
 
 	@NotNull
 	@Positive
-	private int rentalCarRentalCarId;
+	private int rentalCarId;
 }

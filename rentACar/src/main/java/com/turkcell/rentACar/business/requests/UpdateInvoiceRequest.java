@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateInvoiceRequest {
-	
+
 	@NotNull
 	@Positive
 	private int invoiceId;
@@ -20,8 +20,8 @@ public class UpdateInvoiceRequest {
 	@NotNull
 	@Size(min = 2, max = 20)
 	private String invoiceNumber;
-	
+
 	@NotNull
 	@Positive
-	private int rentalCarRentalCarId;
+	private int rentalCarId;
 }

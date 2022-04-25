@@ -3,10 +3,6 @@ package com.turkcell.rentACar.business.dtos;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.turkcell.rentACar.entities.concretes.Car;
-import com.turkcell.rentACar.entities.concretes.City;
-import com.turkcell.rentACar.entities.concretes.Customer;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,22 +11,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetRentalCarDto {
-	private int rentalCarId;
+	private int id;
 
 	private LocalDate startingDate;
 
 	private LocalDate endDate;
 
-	private Car car;
+	private Integer carId;
 
-	private City cityOfPickUp;
+	private Integer cityOfPickUpId;
 
-	private City cityOfDelivery;
+	private Integer cityOfDeliveryId;
 
-	private List<AdditionalServiceListDto> additionalServiceListDtos;
-	
-	private Customer customer;
-	
+	private List<OrderedAdditionalServiceListDto> orderedAdditionalServiceList;
+
+	private Integer customerUserId;
+
 	private Double startingKilometer;
 
 	private Double endingKilometer;

@@ -23,4 +23,6 @@ public interface AdditionalServiceService {
 	DataResult<List<AdditionalServiceListDto>> getAllPaged(int pageNo, int pageSize);
 
 	DataResult<List<AdditionalServiceListDto>> getAllSorted(String direction);
+
+	void checkIfAdditionalServiceExistsById(int id);
 }

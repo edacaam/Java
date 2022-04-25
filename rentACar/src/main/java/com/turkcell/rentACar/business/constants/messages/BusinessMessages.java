@@ -29,6 +29,10 @@ public class BusinessMessages {
 	public static final String CAR_KILOMETER_UPDATED_SUCCESSFULLY = "Car's kilometer updated successfully.";
 
 	public static final String CAR_NOT_FOUND = "Car not found with this id.";
+	public static final String CAR_ALREADY_UNDER_MAINTENANCE = "Car already under maintenance in this date.";
+	public static final String CAR_RENTED_IN_MAINTENANCE_DATE = "Car rented in this maintenance date.";
+	public static final String CAR_ALREADY_RENTED = "Car already rented in this date range.";
+	public static final String CAR_UNDER_MAINTENANCE_IN_RENT_DATE = "Car under maintenance in this date range.";
 
 	public static final String CARD_INFORMATION_DELETED_SUCCESSFULLY = "Card information deleted successfully.";
 	public static final String CARD_INFORMATION_ADDED_SUCCESSFULLY = "Card information added successfully.";
@@ -51,6 +55,8 @@ public class BusinessMessages {
 	public static final String CAR_MAINTENANCE_UPDATED_SUCCESSFULLY = "Car maintenance updated successfully.";
 	public static final String CAR_MAINTENANCE_LISTED_SUCCESSFULLY = "Car maintenances listed successfully.";
 	public static final String CAR_MAINTENANCE_GET_SUCCESSFULLY = "Car maintenance get successfully.";
+
+	public static final String CAR_MAINTENANCE_NOT_FOUND = "Car maintenance not found with this id.";
 
 	public static final String CITY_DELETED_SUCCESSFULLY = "City deleted successfully.";
 	public static final String CITY_ADDED_SUCCESSFULLY = "City added successfully.";
@@ -116,5 +122,8 @@ public class BusinessMessages {
 	public static final String RENTAL_CAR_UPDATED_SUCCESSFULLY = "Rental car updated successfully.";
 	public static final String RENTAL_CAR_LISTED_SUCCESSFULLY = "Rental cars listed successfully.";
 	public static final String RENTAL_CAR_GET_SUCCESSFULLY = "Rental car get successfully.";
+
+	public static final String RENTAL_CAR_NOT_FOUND = "Rental car not found with this id.";
+	public static final String RENTAL_CAR_DATE_INVALID = "Rental car starting date can't be after ending date.";
 
 }

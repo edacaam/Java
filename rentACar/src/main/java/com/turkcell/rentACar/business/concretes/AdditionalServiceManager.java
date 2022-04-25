@@ -134,7 +134,8 @@ public class AdditionalServiceManager implements AdditionalServiceService {
 		}
 	}
 
-	private void checkIfAdditionalServiceExistsById(int id) {
+	@Override
+	public void checkIfAdditionalServiceExistsById(int id) {
 		if (!this.additionalServiceDao.existsById(id)) {
 			throw new BusinessException(BusinessMessages.ADDITIONAL_SERVICE_NOT_FOUND);
 		}

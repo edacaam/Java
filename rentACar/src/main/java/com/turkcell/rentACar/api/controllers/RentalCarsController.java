@@ -15,15 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.turkcell.rentACar.api.models.rentalCar.CreateRentalCarModel;
+import com.turkcell.rentACar.api.models.rentalCar.UpdateRentalCarModel;
 import com.turkcell.rentACar.business.abstracts.RentalCarService;
 import com.turkcell.rentACar.business.dtos.GetRentalCarDto;
 import com.turkcell.rentACar.business.dtos.RentalCarListDto;
-import com.turkcell.rentACar.business.requests.CreateRentalCarRequest;
 import com.turkcell.rentACar.business.requests.EndOfRentRequest;
-import com.turkcell.rentACar.business.requests.UpdateRentalCarRequest;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.Result;
-
 
 @RestController
 @RequestMapping("/api/rentalCars")
@@ -32,13 +31,17 @@ public class RentalCarsController {
 
 	@Autowired
 	public RentalCarsController(RentalCarService rentalCarService) {
-		super();
 		this.rentalCarService = rentalCarService;
 	}
 
-	@PostMapping("/add")
-	Result add(@RequestBody @Valid CreateRentalCarRequest createRentalCarRequest) {
-		return this.rentalCarService.add(createRentalCarRequest);
+	@PostMapping("/addForCorporate")
+	Result addForCorporate(@RequestBody @Valid CreateRentalCarModel createRentalCarModel) {
+		return this.rentalCarService.addForCorporateCustomer(createRentalCarModel);
+	}
+
+	@PostMapping("/addForIndividual")
+	Result addForIndividual(@RequestBody @Valid CreateRentalCarModel createRentalCarModel) {
+		return this.rentalCarService.addForIndividualCustomer(createRentalCarModel);
 	}
 
 	@GetMapping("/getByRentalId/{rentalId}")
@@ -63,15 +66,15 @@ public class RentalCarsController {
 	}
 
 	@PutMapping("/update")
-	Result update(@RequestBody @Valid UpdateRentalCarRequest updateRentalCarRequest) {
-		return this.rentalCarService.update(updateRentalCarRequest);
+	Result update(@RequestBody @Valid UpdateRentalCarModel updateRentalCarModel) {
+		return this.rentalCarService.update(updateRentalCarModel);
 	}
 
 	@DeleteMapping("/delete")
 	Result delete(int id) {
 		return this.rentalCarService.delete(id);
 	}
-	
+
 	@PutMapping("/endOfRent")
 	public Result endOfRent(@RequestBody @Valid EndOfRentRequest endOfRentRequest) {
 		return this.rentalCarService.endOfRent(endOfRentRequest);

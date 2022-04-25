@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class BrandListDto {
 
 	private Integer id;
+
 	private String brandName;
 }

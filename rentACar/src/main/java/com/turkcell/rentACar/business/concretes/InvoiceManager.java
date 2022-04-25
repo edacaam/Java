@@ -7,13 +7,15 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.turkcell.rentACar.business.abstracts.CarService;
+import com.turkcell.rentACar.business.abstracts.CustomerService;
 import com.turkcell.rentACar.business.abstracts.InvoiceService;
 import com.turkcell.rentACar.business.abstracts.RentalCarService;
 import com.turkcell.rentACar.business.constants.messages.BusinessMessages;
-import com.turkcell.rentACar.business.dtos.AdditionalServiceListDto;
 import com.turkcell.rentACar.business.dtos.GetInvoiceDto;
 import com.turkcell.rentACar.business.dtos.GetRentalCarDto;
 import com.turkcell.rentACar.business.dtos.InvoiceListDto;
+import com.turkcell.rentACar.business.dtos.OrderedAdditionalServiceListDto;
 import com.turkcell.rentACar.business.requests.CreateInvoiceRequest;
 import com.turkcell.rentACar.business.requests.UpdateInvoiceRequest;
 import com.turkcell.rentACar.core.utilities.mapping.ModelMapperService;
@@ -30,6 +32,8 @@ public class InvoiceManager implements InvoiceService {
 	private InvoiceDao invoiceDao;
 	private ModelMapperService modelMapperService;
 	private RentalCarService rentalCarService;
+	private CarService carService;
+	private CustomerService customerService;
 
 	public InvoiceManager(InvoiceDao invoiceDao, ModelMapperService modelMapperService,
 			RentalCarService rentalCarService) {
@@ -42,8 +46,7 @@ public class InvoiceManager implements InvoiceService {
 	public Result add(CreateInvoiceRequest createInvoiceRequest) {
 		Invoice invoice = this.modelMapperService.forRequest().map(createInvoiceRequest, Invoice.class);
 
-		GetRentalCarDto rentalCarDto = rentalCarService.getById(createInvoiceRequest.getRentalCarRentalCarId())
-				.getData();
+		GetRentalCarDto rentalCarDto = rentalCarService.getById(createInvoiceRequest.getRentalCarId()).getData();
 		invoice.setInvoiceId(0);
 		setInvoiceFields(invoice, rentalCarDto);
 		this.invoiceDao.save(invoice);
@@ -59,8 +62,7 @@ public class InvoiceManager implements InvoiceService {
 	@Override
 	public Result update(UpdateInvoiceRequest updateInvoiceRequest) {
 		Invoice invoice = this.modelMapperService.forRequest().map(updateInvoiceRequest, Invoice.class);
-		GetRentalCarDto rentalCarDto = rentalCarService.getById(updateInvoiceRequest.getRentalCarRentalCarId())
-				.getData();
+		GetRentalCarDto rentalCarDto = rentalCarService.getById(updateInvoiceRequest.getRentalCarId()).getData();
 		setInvoiceFields(invoice, rentalCarDto);
 		this.invoiceDao.save(invoice);
 		return new SuccessResult(BusinessMessages.INVOICE_UPDATED_SUCCESSFULLY);
@@ -103,7 +105,7 @@ public class InvoiceManager implements InvoiceService {
 	private void setInvoiceFields(Invoice invoice, GetRentalCarDto rentalCarDto) {
 		invoice.setTotalRentDay(
 				(int) ChronoUnit.DAYS.between(rentalCarDto.getStartingDate(), rentalCarDto.getEndDate()));
-		invoice.setCustomer(rentalCarDto.getCustomer());
+		invoice.setCustomer(customerService.getById(rentalCarDto.getCustomerUserId()).getData());
 		invoice.setTotalPrice(calculateTotalPrice(rentalCarDto));
 		invoice.setRentStartDate(rentalCarDto.getStartingDate());
 		invoice.setRentEndDate(rentalCarDto.getEndDate());
@@ -112,14 +114,14 @@ public class InvoiceManager implements InvoiceService {
 
 	private double calculateTotalPrice(GetRentalCarDto rentalCar) {
 		long totalDay = ChronoUnit.DAYS.between(rentalCar.getStartingDate(), rentalCar.getEndDate());
-		double totalPrice = totalDay * (rentalCar.getCar().getDailyPrice());
+		double totalPrice = totalDay * (carService.getById(rentalCar.getCarId()).getData().getDailyPrice());
 
-		if (!rentalCar.getCityOfDelivery().equals(rentalCar.getCityOfPickUp())) {
+		if (!rentalCar.getCityOfDeliveryId().equals(rentalCar.getCityOfPickUpId())) {
 			totalPrice += 750;
 		}
 
-		for (AdditionalServiceListDto orderedAdditionalService : rentalCar.getAdditionalServiceListDtos()) {
-			totalPrice += orderedAdditionalService.getDailyPrice();
+		for (OrderedAdditionalServiceListDto orderedAdditionalService : rentalCar.getOrderedAdditionalServiceList()) {
+			totalPrice += orderedAdditionalService.getAdditionalService().getDailyPrice();
 		}
 
 		return totalPrice;

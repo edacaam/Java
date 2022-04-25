@@ -27,6 +27,6 @@ public class GetInvoiceDto {
 
 	private int customerUserId;
 
-	private int rentalCarRentalCarId;
+	private int rentalCarId;
 
 }

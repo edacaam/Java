@@ -1,6 +1,6 @@
 package com.turkcell.rentACar.business.requests;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -13,9 +13,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateCarMaintenanceRequest {
+
 	private String description;
+
 	@NotNull
-	private Date returnDate;
+	private LocalDate returnDate;
+
 	@NotNull
 	@Positive
 	private int carId;

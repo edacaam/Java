@@ -29,7 +29,7 @@ public class RentalCar {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "rental_car_id")
-	private Integer rentalCarId;
+	private Integer id;
 
 	@Column(name = "starting_date")
 	private LocalDate startingDate;
