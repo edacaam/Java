@@ -15,7 +15,7 @@ public class UpdateInvoiceRequest {
 
 	@NotNull
 	@Positive
-	private int invoiceId;
+	private int id;
 
 	@NotNull
 	@Size(min = 2, max = 20)

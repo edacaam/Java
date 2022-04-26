@@ -233,6 +233,7 @@ public class RentalCarManager implements RentalCarService {
 		return new SuccessResult("Ending kilometer recorded, car rental is over.");
 	}
 
+	@Override
 	public void checkIfRentalCarIsExistsById(int rentalCarId) {
 		if (!this.rentalCarDao.existsById(rentalCarId)) {
 			throw new BusinessException(BusinessMessages.RENTAL_CAR_NOT_FOUND);

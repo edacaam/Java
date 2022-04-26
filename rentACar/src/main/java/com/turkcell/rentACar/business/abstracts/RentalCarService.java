@@ -33,4 +33,6 @@ public interface RentalCarService {
 	DataResult<List<RentalCarListDto>> getAllSorted(Sort.Direction direction);
 
 	DataResult<List<RentalCarListDto>> getByCarId(int carId);
+
+	void checkIfRentalCarIsExistsById(int rentalCarId);
 }

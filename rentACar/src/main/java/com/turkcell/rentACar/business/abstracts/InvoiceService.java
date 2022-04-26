@@ -20,8 +20,10 @@ public interface InvoiceService {
 	DataResult<GetInvoiceDto> getById(int id);
 
 	DataResult<List<InvoiceListDto>> getAll();
-	
+
 	DataResult<List<InvoiceListDto>> getByCustomerId(int customerId);
-	
-	DataResult<List<InvoiceListDto>> getByDateRange(LocalDate startDate,LocalDate endDate);
+
+	DataResult<List<InvoiceListDto>> getByDateRange(LocalDate startDate, LocalDate endDate);
+
+	void checkIfInvoiceExistsById(int id);
 }

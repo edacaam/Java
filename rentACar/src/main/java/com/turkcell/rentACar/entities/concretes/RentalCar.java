@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -36,7 +35,7 @@ public class RentalCar {
 
 	@Column(name = "end_date")
 	private LocalDate endDate;
-	
+
 	@Column(name = "starting_kilometer")
 	private Double startingKilometer;
 
@@ -46,25 +45,25 @@ public class RentalCar {
 	@ManyToOne
 	@JoinColumn(name = "car_id")
 	private Car car;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "city_of_pick_up_id")
 	private City cityOfPickUp;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "city_of_delivery_id")
 	private City cityOfDelivery;
-	
+
 	@OneToMany(mappedBy = "rentalCar", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<OrderedAdditionalService> orderedAdditionalServices;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private Customer customer;
-	
-	@OneToOne(mappedBy = "rentalCar")
-	private Invoice invoice;
-	
-	 @OneToMany(mappedBy = "customer")
-	 private List<Payment> payments;
+
+	@OneToMany(mappedBy = "rentalCar")
+	private List<Invoice> invoices;
+
+	@OneToMany(mappedBy = "customer")
+	private List<Payment> payments;
 }

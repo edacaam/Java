@@ -105,6 +105,8 @@ public class BusinessMessages {
 	public static final String INVOICE_LISTED_SUCCESSFULLY = "Invoices listed successfully.";
 	public static final String INVOICE_GET_SUCCESSFULLY = "Invoice get successfully.";
 
+	public static final String INVOICE_NOT_FOUND = "Invoice not found with this id.";
+
 	public static final String ORDERED_ADDITIONAL_SERVICE_DELETED_SUCCESSFULLY = "Ordered additional service deleted successfully.";
 	public static final String ORDERED_ADDITIONAL_SERVICE_ADDED_SUCCESSFULLY = "Ordered additional service added successfully.";
 	public static final String ORDERED_ADDITIONAL_SERVICE_UPDATED_SUCCESSFULLY = "Ordered additional service updated successfully.";
