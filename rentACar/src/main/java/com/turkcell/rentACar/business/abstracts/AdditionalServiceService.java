@@ -2,10 +2,10 @@ package com.turkcell.rentACar.business.abstracts;
 
 import java.util.List;
 
-import com.turkcell.rentACar.business.dtos.AdditionalServiceListDto;
-import com.turkcell.rentACar.business.dtos.GetAdditionalServiceDto;
-import com.turkcell.rentACar.business.requests.CreateAdditionalServiceRequest;
-import com.turkcell.rentACar.business.requests.UpdateAdditionalServiceRequest;
+import com.turkcell.rentACar.business.dtos.additionalService.AdditionalServiceListDto;
+import com.turkcell.rentACar.business.dtos.additionalService.GetAdditionalServiceDto;
+import com.turkcell.rentACar.business.requests.additionalService.CreateAdditionalServiceRequest;
+import com.turkcell.rentACar.business.requests.additionalService.UpdateAdditionalServiceRequest;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.Result;
 

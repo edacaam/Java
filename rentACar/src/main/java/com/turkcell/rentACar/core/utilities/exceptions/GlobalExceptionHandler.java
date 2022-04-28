@@ -33,4 +33,11 @@ public class GlobalExceptionHandler {
 	public ErrorResult handleBusinessExceptions(BusinessException businessException) {
 		return new ErrorResult(businessException.getMessage());
 	}
+
+	@ExceptionHandler
+	@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+	public ErrorResult handleException(Exception ex) {
+		String message = "An unexpected error was encountered.";
+		return new ErrorResult(message);
+	}
 }

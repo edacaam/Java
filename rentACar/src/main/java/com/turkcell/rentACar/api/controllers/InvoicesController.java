@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turkcell.rentACar.business.abstracts.InvoiceService;
-import com.turkcell.rentACar.business.dtos.GetInvoiceDto;
-import com.turkcell.rentACar.business.dtos.InvoiceListDto;
-import com.turkcell.rentACar.business.requests.CreateInvoiceRequest;
-import com.turkcell.rentACar.business.requests.UpdateInvoiceRequest;
+import com.turkcell.rentACar.business.dtos.invoice.GetInvoiceDto;
+import com.turkcell.rentACar.business.dtos.invoice.InvoiceListDto;
+import com.turkcell.rentACar.business.requests.invoice.CreateInvoiceRequest;
+import com.turkcell.rentACar.business.requests.invoice.UpdateInvoiceRequest;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.Result;
 

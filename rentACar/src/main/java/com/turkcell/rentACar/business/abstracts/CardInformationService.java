@@ -2,10 +2,10 @@ package com.turkcell.rentACar.business.abstracts;
 
 import java.util.List;
 
-import com.turkcell.rentACar.business.dtos.CardInformationListDto;
-import com.turkcell.rentACar.business.dtos.GetCardInformationDto;
-import com.turkcell.rentACar.business.requests.CreateCardInformationRequest;
-import com.turkcell.rentACar.business.requests.UpdateCardInformationRequest;
+import com.turkcell.rentACar.business.dtos.cardInformation.CardInformationListDto;
+import com.turkcell.rentACar.business.dtos.cardInformation.GetCardInformationDto;
+import com.turkcell.rentACar.business.requests.cardInformation.CreateCardInformationRequest;
+import com.turkcell.rentACar.business.requests.cardInformation.UpdateCardInformationRequest;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.Result;
 

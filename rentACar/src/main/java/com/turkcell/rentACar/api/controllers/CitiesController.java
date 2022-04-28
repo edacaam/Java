@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turkcell.rentACar.business.abstracts.CityService;
-import com.turkcell.rentACar.business.dtos.CityListDto;
-import com.turkcell.rentACar.business.dtos.GetCityDto;
-import com.turkcell.rentACar.business.requests.CreateCityRequest;
-import com.turkcell.rentACar.business.requests.UpdateCityRequest;
+import com.turkcell.rentACar.business.dtos.city.CityListDto;
+import com.turkcell.rentACar.business.dtos.city.GetCityDto;
+import com.turkcell.rentACar.business.requests.city.CreateCityRequest;
+import com.turkcell.rentACar.business.requests.city.UpdateCityRequest;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.Result;
 

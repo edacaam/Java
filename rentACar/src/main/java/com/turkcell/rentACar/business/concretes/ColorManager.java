@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.turkcell.rentACar.business.abstracts.ColorService;
 import com.turkcell.rentACar.business.constants.messages.BusinessMessages;
-import com.turkcell.rentACar.business.dtos.ColorListDto;
-import com.turkcell.rentACar.business.dtos.GetColorDto;
-import com.turkcell.rentACar.business.requests.CreateColorRequest;
-import com.turkcell.rentACar.business.requests.UpdateColorRequest;
+import com.turkcell.rentACar.business.dtos.color.ColorListDto;
+import com.turkcell.rentACar.business.dtos.color.GetColorDto;
+import com.turkcell.rentACar.business.requests.color.CreateColorRequest;
+import com.turkcell.rentACar.business.requests.color.UpdateColorRequest;
 import com.turkcell.rentACar.core.utilities.exceptions.BusinessException;
 import com.turkcell.rentACar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentACar.core.utilities.results.DataResult;

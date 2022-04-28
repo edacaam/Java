@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turkcell.rentACar.business.abstracts.CardInformationService;
-import com.turkcell.rentACar.business.dtos.CardInformationListDto;
-import com.turkcell.rentACar.business.dtos.GetCardInformationDto;
-import com.turkcell.rentACar.business.requests.CreateCardInformationRequest;
-import com.turkcell.rentACar.business.requests.UpdateCardInformationRequest;
+import com.turkcell.rentACar.business.dtos.cardInformation.CardInformationListDto;
+import com.turkcell.rentACar.business.dtos.cardInformation.GetCardInformationDto;
+import com.turkcell.rentACar.business.requests.cardInformation.CreateCardInformationRequest;
+import com.turkcell.rentACar.business.requests.cardInformation.UpdateCardInformationRequest;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.Result;
 

@@ -119,6 +119,8 @@ public class BusinessMessages {
 	public static final String PAYMENT_LISTED_SUCCESSFULLY = "Payments listed successfully.";
 	public static final String PAYMENT_GET_SUCCESSFULLY = "Payment get successfully.";
 
+	public static final String PAYMENT_NOT_FOUND = "Payment not found with this id.";
+
 	public static final String RENTAL_CAR_DELETED_SUCCESSFULLY = "Rental car deleted successfully.";
 	public static final String RENTAL_CAR_ADDED_SUCCESSFULLY = "Rental car added successfully.";
 	public static final String RENTAL_CAR_UPDATED_SUCCESSFULLY = "Rental car updated successfully.";
@@ -128,4 +130,8 @@ public class BusinessMessages {
 	public static final String RENTAL_CAR_NOT_FOUND = "Rental car not found with this id.";
 	public static final String RENTAL_CAR_DATE_INVALID = "Rental car starting date can't be after ending date.";
 
+	public static final String IS_BANK_PAYMENT_FAILED = "An error occurred during the payment transaction with Is Bank.";
+	public static final String ZIRAAT_BANK_PAYMENT_FAILED = "An error occurred during the payment transaction with Ziraat Bank.";
+
+	public static final String NOT_LATE_DELIVERY = "The car is not delivered late.";
 }

@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.turkcell.rentACar.business.abstracts.BrandService;
 import com.turkcell.rentACar.business.constants.messages.BusinessMessages;
-import com.turkcell.rentACar.business.dtos.BrandListDto;
-import com.turkcell.rentACar.business.dtos.GetBrandDto;
-import com.turkcell.rentACar.business.requests.CreateBrandRequest;
-import com.turkcell.rentACar.business.requests.UpdateBrandRequest;
+import com.turkcell.rentACar.business.dtos.brand.BrandListDto;
+import com.turkcell.rentACar.business.dtos.brand.GetBrandDto;
+import com.turkcell.rentACar.business.requests.brand.CreateBrandRequest;
+import com.turkcell.rentACar.business.requests.brand.UpdateBrandRequest;
 import com.turkcell.rentACar.core.utilities.exceptions.BusinessException;
 import com.turkcell.rentACar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentACar.core.utilities.results.DataResult;

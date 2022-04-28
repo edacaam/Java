@@ -12,12 +12,12 @@ import com.turkcell.rentACar.business.abstracts.CustomerService;
 import com.turkcell.rentACar.business.abstracts.InvoiceService;
 import com.turkcell.rentACar.business.abstracts.RentalCarService;
 import com.turkcell.rentACar.business.constants.messages.BusinessMessages;
-import com.turkcell.rentACar.business.dtos.GetInvoiceDto;
-import com.turkcell.rentACar.business.dtos.GetRentalCarDto;
-import com.turkcell.rentACar.business.dtos.InvoiceListDto;
-import com.turkcell.rentACar.business.dtos.OrderedAdditionalServiceListDto;
-import com.turkcell.rentACar.business.requests.CreateInvoiceRequest;
-import com.turkcell.rentACar.business.requests.UpdateInvoiceRequest;
+import com.turkcell.rentACar.business.dtos.invoice.GetInvoiceDto;
+import com.turkcell.rentACar.business.dtos.invoice.InvoiceListDto;
+import com.turkcell.rentACar.business.dtos.orderedAdditionalService.OrderedAdditionalServiceListDto;
+import com.turkcell.rentACar.business.dtos.rentalCar.GetRentalCarDto;
+import com.turkcell.rentACar.business.requests.invoice.CreateInvoiceRequest;
+import com.turkcell.rentACar.business.requests.invoice.UpdateInvoiceRequest;
 import com.turkcell.rentACar.core.utilities.exceptions.BusinessException;
 import com.turkcell.rentACar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
@@ -46,7 +46,7 @@ public class InvoiceManager implements InvoiceService {
 	}
 
 	@Override
-	public Result add(CreateInvoiceRequest createInvoiceRequest) {
+	public DataResult<Invoice> add(CreateInvoiceRequest createInvoiceRequest) {
 
 		rentalCarService.checkIfRentalCarIsExistsById(createInvoiceRequest.getRentalCarId());
 
@@ -58,9 +58,27 @@ public class InvoiceManager implements InvoiceService {
 
 		setInvoiceFields(invoice, rentalCarDto);
 
-		this.invoiceDao.save(invoice);
+		Invoice savedInvoice = this.invoiceDao.save(invoice);
 
-		return new SuccessResult(BusinessMessages.INVOICE_ADDED_SUCCESSFULLY);
+		return new SuccessDataResult<>(savedInvoice, BusinessMessages.INVOICE_ADDED_SUCCESSFULLY);
+	}
+
+	@Override
+	public DataResult<Invoice> addLateDeliveredInvoice(CreateInvoiceRequest createInvoiceRequest, LocalDate lateDate) {
+
+		rentalCarService.checkIfRentalCarIsExistsById(createInvoiceRequest.getRentalCarId());
+
+		Invoice invoice = this.modelMapperService.forRequest().map(createInvoiceRequest, Invoice.class);
+
+		GetRentalCarDto rentalCarDto = rentalCarService.getById(createInvoiceRequest.getRentalCarId()).getData();
+
+		invoice.setId(0);
+
+		setInvoiceFieldsForLateDelivery(invoice, rentalCarDto, lateDate);
+
+		Invoice savedInvoice = this.invoiceDao.save(invoice);
+
+		return new SuccessDataResult<>(savedInvoice, BusinessMessages.INVOICE_ADDED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -147,25 +165,57 @@ public class InvoiceManager implements InvoiceService {
 		invoice.setRentEndDate(rentalCarDto.getEndDate());
 		invoice.setCreationDate(LocalDate.now());
 		invoice.setCustomer(customerService.getById(rentalCarDto.getCustomerUserId()).getData());
+		invoice.setInvoiceNumber(System.currentTimeMillis() + rentalCarDto.getId().toString());
+	}
+
+	private void setInvoiceFieldsForLateDelivery(Invoice invoice, GetRentalCarDto rentalCarDto, LocalDate lateDate) {
+		invoice.setTotalRentDay(calculateTotalDayForLateDelivery(rentalCarDto, lateDate));
+		invoice.setTotalPrice(calculateTotalPriceForLateDelivery(rentalCarDto, lateDate));
+		invoice.setRentStartDate(rentalCarDto.getEndDate());
+		invoice.setRentEndDate(lateDate);
+		invoice.setCreationDate(LocalDate.now());
+		invoice.setCustomer(customerService.getById(rentalCarDto.getCustomerUserId()).getData());
+		invoice.setInvoiceNumber(System.currentTimeMillis() + rentalCarDto.getId().toString());
 	}
 
 	private double calculateTotalPrice(GetRentalCarDto rentalCar) {
-		double totalPrice = calculateTotalDay(rentalCar)
-				* (carService.getById(rentalCar.getCarId()).getData().getDailyPrice());
+		int totalDate = calculateTotalDay(rentalCar);
+		return calculateCarRentPrice(rentalCar, totalDate) + calculateAdditionalServicesPrice(rentalCar, totalDate)
+				+ calculateDifferentCityPrice(rentalCar);
+	}
 
-		if (!rentalCar.getCityOfDeliveryId().equals(rentalCar.getCityOfPickUpId())) {
-			totalPrice += 750;
-		}
-
-		for (OrderedAdditionalServiceListDto orderedAdditionalService : rentalCar.getOrderedAdditionalServiceList()) {
-			totalPrice += orderedAdditionalService.getAdditionalService().getDailyPrice();
-		}
-
-		return totalPrice;
+	private double calculateTotalPriceForLateDelivery(GetRentalCarDto rentalCar, LocalDate lateDate) {
+		int totalDate = calculateTotalDayForLateDelivery(rentalCar, lateDate);
+		return calculateCarRentPrice(rentalCar, totalDate) + calculateAdditionalServicesPrice(rentalCar, totalDate);
 	}
 
 	private int calculateTotalDay(GetRentalCarDto rentalCarDto) {
 		return (int) (ChronoUnit.DAYS.between(rentalCarDto.getStartingDate(), rentalCarDto.getEndDate()) + 1);
+	}
+
+	private int calculateTotalDayForLateDelivery(GetRentalCarDto rentalCarDto, LocalDate lateDate) {
+		return (int) ChronoUnit.DAYS.between(rentalCarDto.getEndDate(), lateDate);
+	}
+
+	private double calculateAdditionalServicesPrice(GetRentalCarDto rentalCarDto, int totalDate) {
+		double additionalServicePrice = 0;
+		for (OrderedAdditionalServiceListDto orderedAdditionalService : rentalCarDto
+				.getOrderedAdditionalServiceList()) {
+			additionalServicePrice += totalDate * orderedAdditionalService.getAdditionalService().getDailyPrice();
+		}
+		return additionalServicePrice;
+	}
+
+	private double calculateDifferentCityPrice(GetRentalCarDto rentalCarDto) {
+		if (!rentalCarDto.getCityOfDeliveryId().equals(rentalCarDto.getCityOfPickUpId())) {
+			return 750;
+		}
+		return 0;
+	}
+
+	private double calculateCarRentPrice(GetRentalCarDto rentalCarDto, int totalDate) {
+
+		return totalDate * (carService.getById(rentalCarDto.getCarId()).getData().getDailyPrice());
 	}
 
 	@Override

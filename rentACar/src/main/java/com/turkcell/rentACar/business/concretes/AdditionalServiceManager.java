@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.turkcell.rentACar.business.abstracts.AdditionalServiceService;
 import com.turkcell.rentACar.business.constants.messages.BusinessMessages;
-import com.turkcell.rentACar.business.dtos.AdditionalServiceListDto;
-import com.turkcell.rentACar.business.dtos.GetAdditionalServiceDto;
-import com.turkcell.rentACar.business.requests.CreateAdditionalServiceRequest;
-import com.turkcell.rentACar.business.requests.UpdateAdditionalServiceRequest;
+import com.turkcell.rentACar.business.dtos.additionalService.AdditionalServiceListDto;
+import com.turkcell.rentACar.business.dtos.additionalService.GetAdditionalServiceDto;
+import com.turkcell.rentACar.business.requests.additionalService.CreateAdditionalServiceRequest;
+import com.turkcell.rentACar.business.requests.additionalService.UpdateAdditionalServiceRequest;
 import com.turkcell.rentACar.core.utilities.exceptions.BusinessException;
 import com.turkcell.rentACar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentACar.core.utilities.results.DataResult;

@@ -3,15 +3,19 @@ package com.turkcell.rentACar.business.abstracts;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.turkcell.rentACar.business.dtos.GetInvoiceDto;
-import com.turkcell.rentACar.business.dtos.InvoiceListDto;
-import com.turkcell.rentACar.business.requests.CreateInvoiceRequest;
-import com.turkcell.rentACar.business.requests.UpdateInvoiceRequest;
+import com.turkcell.rentACar.business.dtos.invoice.GetInvoiceDto;
+import com.turkcell.rentACar.business.dtos.invoice.InvoiceListDto;
+import com.turkcell.rentACar.business.requests.invoice.CreateInvoiceRequest;
+import com.turkcell.rentACar.business.requests.invoice.UpdateInvoiceRequest;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.Result;
+import com.turkcell.rentACar.entities.concretes.Invoice;
 
 public interface InvoiceService {
-	Result add(CreateInvoiceRequest createInvoiceRequest);
+
+	DataResult<Invoice> add(CreateInvoiceRequest createInvoiceRequest);
+
+	DataResult<Invoice> addLateDeliveredInvoice(CreateInvoiceRequest createInvoiceRequest, LocalDate lateDate);
 
 	Result delete(int id);
 

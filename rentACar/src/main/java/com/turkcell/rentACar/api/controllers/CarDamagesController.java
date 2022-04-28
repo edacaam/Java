@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turkcell.rentACar.business.abstracts.CarDamageService;
-import com.turkcell.rentACar.business.dtos.CarDamageListDto;
-import com.turkcell.rentACar.business.dtos.GetCarDamageDto;
-import com.turkcell.rentACar.business.requests.CreateCarDamageRequest;
-import com.turkcell.rentACar.business.requests.UpdateCarDamageRequest;
+import com.turkcell.rentACar.business.dtos.carDamage.CarDamageListDto;
+import com.turkcell.rentACar.business.dtos.carDamage.GetCarDamageDto;
+import com.turkcell.rentACar.business.requests.carDamage.CreateCarDamageRequest;
+import com.turkcell.rentACar.business.requests.carDamage.UpdateCarDamageRequest;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
 import com.turkcell.rentACar.core.utilities.results.Result;
 

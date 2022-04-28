@@ -10,8 +10,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.turkcell.rentACar.api.models.rentalCar.CreateRentalCarModel;
-import com.turkcell.rentACar.api.models.rentalCar.UpdateRentalCarModel;
+import com.turkcell.rentACar.api.models.rentalCar.rentalCar.CreateRentalCarModel;
+import com.turkcell.rentACar.api.models.rentalCar.rentalCar.UpdateRentalCarModel;
 import com.turkcell.rentACar.business.abstracts.AdditionalServiceService;
 import com.turkcell.rentACar.business.abstracts.CarMaintenanceService;
 import com.turkcell.rentACar.business.abstracts.CarService;
@@ -21,13 +21,13 @@ import com.turkcell.rentACar.business.abstracts.IndividualCustomerService;
 import com.turkcell.rentACar.business.abstracts.OrderedAdditionalServiceService;
 import com.turkcell.rentACar.business.abstracts.RentalCarService;
 import com.turkcell.rentACar.business.constants.messages.BusinessMessages;
-import com.turkcell.rentACar.business.dtos.CarMaintenanceListDto;
-import com.turkcell.rentACar.business.dtos.GetRentalCarDto;
-import com.turkcell.rentACar.business.dtos.RentalCarListDto;
-import com.turkcell.rentACar.business.requests.CreateOrderedAdditionalServiceRequest;
-import com.turkcell.rentACar.business.requests.CreateRentalCarRequest;
-import com.turkcell.rentACar.business.requests.EndOfRentRequest;
-import com.turkcell.rentACar.business.requests.UpdateRentalCarRequest;
+import com.turkcell.rentACar.business.dtos.carMaintenance.CarMaintenanceListDto;
+import com.turkcell.rentACar.business.dtos.rentalCar.GetRentalCarDto;
+import com.turkcell.rentACar.business.dtos.rentalCar.RentalCarListDto;
+import com.turkcell.rentACar.business.requests.orderedAdditionalService.CreateOrderedAdditionalServiceRequest;
+import com.turkcell.rentACar.business.requests.rentalCar.CreateRentalCarRequest;
+import com.turkcell.rentACar.business.requests.rentalCar.EndOfRentRequest;
+import com.turkcell.rentACar.business.requests.rentalCar.UpdateRentalCarRequest;
 import com.turkcell.rentACar.core.utilities.exceptions.BusinessException;
 import com.turkcell.rentACar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentACar.core.utilities.results.DataResult;
@@ -70,7 +70,7 @@ public class RentalCarManager implements RentalCarService {
 	}
 
 	@Override
-	public Result addForCorporateCustomer(CreateRentalCarModel createRentalCarModel) {
+	public DataResult<RentalCar> addForCorporateCustomer(CreateRentalCarModel createRentalCarModel) {
 		carService.checkIfCarExistsById(createRentalCarModel.getCreateRentalCarRequest().getCarId());
 		cityService.checkIfCityExistsById(createRentalCarModel.getCreateRentalCarRequest().getCityOfDeliveryId());
 		cityService.checkIfCityExistsById(createRentalCarModel.getCreateRentalCarRequest().getCityOfPickUpId());
@@ -89,12 +89,12 @@ public class RentalCarManager implements RentalCarService {
 		rentalCar.setStartingKilometer(carService.getById(rentalCar.getCar().getId()).getData().getKilometer());
 		rentalCar.setId(0);
 
-		this.rentalCarDao.save(rentalCar);
-		return new SuccessResult(BusinessMessages.RENTAL_CAR_ADDED_SUCCESSFULLY);
+		RentalCar savedRentalCar = this.rentalCarDao.save(rentalCar);
+		return new SuccessDataResult<>(savedRentalCar, BusinessMessages.RENTAL_CAR_ADDED_SUCCESSFULLY);
 	}
 
 	@Override
-	public Result addForIndividualCustomer(CreateRentalCarModel createRentalCarModel) {
+	public DataResult<RentalCar> addForIndividualCustomer(CreateRentalCarModel createRentalCarModel) {
 		carService.checkIfCarExistsById(createRentalCarModel.getCreateRentalCarRequest().getCarId());
 		cityService.checkIfCityExistsById(createRentalCarModel.getCreateRentalCarRequest().getCityOfDeliveryId());
 		cityService.checkIfCityExistsById(createRentalCarModel.getCreateRentalCarRequest().getCityOfPickUpId());
@@ -113,8 +113,8 @@ public class RentalCarManager implements RentalCarService {
 		rentalCar.setStartingKilometer(carService.getById(rentalCar.getCar().getId()).getData().getKilometer());
 		rentalCar.setId(0);
 
-		this.rentalCarDao.save(rentalCar);
-		return new SuccessResult(BusinessMessages.RENTAL_CAR_ADDED_SUCCESSFULLY);
+		RentalCar savedRentalCar = this.rentalCarDao.save(rentalCar);
+		return new SuccessDataResult<>(savedRentalCar, BusinessMessages.RENTAL_CAR_ADDED_SUCCESSFULLY);
 	}
 
 	@Override
@@ -222,9 +222,10 @@ public class RentalCarManager implements RentalCarService {
 	@Override
 	public Result endOfRent(EndOfRentRequest endOfRentRequest) {
 
-		RentalCar rentalCar = rentalCarDao.getById(endOfRentRequest.getId());
+		RentalCar rentalCar = rentalCarDao.getById(endOfRentRequest.getRentalCarId());
 
 		rentalCar.setEndingKilometer(endOfRentRequest.getEndingKilometer());
+		rentalCar.setEndDate(endOfRentRequest.getEndingDate());
 
 		carService.updateKilometer(rentalCar.getCar().getId(), rentalCar.getEndingKilometer());
 
